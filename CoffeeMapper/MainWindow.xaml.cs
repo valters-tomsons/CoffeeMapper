@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Threading;
 using vJoyInterfaceWrap;
 using System.Linq;
+using System.Xml;
 
 namespace CoffeeMapper
 {
@@ -20,6 +21,10 @@ namespace CoffeeMapper
         private GlobalKeyboardHook KeyboardHook;
         ObservableCollection<int> Buttons = new ObservableCollection<int>();
 
+        private static int[] KeyCodes;
+        private static string[] KeyNames;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -27,8 +32,8 @@ namespace CoffeeMapper
             vJoySelfTest();
             Debug.WriteLine(JoyTest.ReturnAxes(joystick, id));
             Debug.WriteLine(JoyTest.AcquireDevice(joystick, id));
-
             Buttons.CollectionChanged += Buttons_Changed;
+            CreateKeyArrays();
         }
 
         private void vJoySelfTest()
@@ -54,7 +59,38 @@ namespace CoffeeMapper
             }
 
             StartButton.IsEnabled = true;
+        }
 
+
+        private void CreateKeyArrays()
+        {
+            string VirtualKeysXML = AppDomain.CurrentDomain.BaseDirectory + @"\data\VirtualKeys.xml";
+
+            List<int> codes = new List<int>();
+            List<string> names = new List<string>(); 
+
+            using (XmlReader reader = XmlReader.Create(VirtualKeysXML))
+            {
+                while(reader.Read())
+                {
+                    if(reader.IsStartElement())
+                    {
+                        switch(reader.Name)
+                        {
+                            case "VirtualKeys":
+                                break;
+                            case "Key":
+                                codes.Add(Convert.ToInt32(reader["value"]));
+                                names.Add(reader["equivalent"]);
+                                break;
+                        }
+                    }
+                }
+            }
+
+            KeyCodes = codes.ToArray();
+            KeyNames = names.ToArray();
+            Debug.WriteLine($"Added {KeyCodes.Length} virtual keys!");
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
@@ -72,7 +108,6 @@ namespace CoffeeMapper
         {
             if(e.KeyboardState == GlobalKeyboardHook.KeyboardState.KeyDown)
             {
-                //Debug.WriteLine(e.KeyboardData.VirtualCode);
                 if(!Buttons.Contains(e.KeyboardData.VirtualCode))
                 {
                     Buttons.Add(e.KeyboardData.VirtualCode);
@@ -92,22 +127,8 @@ namespace CoffeeMapper
             {
                 foreach(int key in e.NewItems)
                 {
-                    if(key == VirtualKeyCodes.W)
-                    {
-                        PressBtn(11);
-                    }
-                    if(key == VirtualKeyCodes.S)
-                    {
-                        PressBtn(12);
-                    }
-                    if(key == VirtualKeyCodes.D)
-                    {
-                        PressBtn(13);
-                    }
-                    if(key == VirtualKeyCodes.A)
-                    {
-                        PressBtn(14);
-                    }
+                    int loc = Array.IndexOf(KeyCodes, key);
+                    Debug.WriteLine(KeyNames[loc]);
                 }
             }
 
@@ -115,22 +136,7 @@ namespace CoffeeMapper
             {
                 foreach (int key in e.OldItems)
                 {
-                    if (key == VirtualKeyCodes.W)
-                    {
-                        DeBtn(11);
-                    }
-                    if (key == VirtualKeyCodes.S)
-                    {
-                        DeBtn(12);
-                    }
-                    if (key == VirtualKeyCodes.D)
-                    {
-                        DeBtn(13);
-                    }
-                    if (key == VirtualKeyCodes.A)
-                    {
-                        DeBtn(14);
-                    }
+
                 }
             }
         }
