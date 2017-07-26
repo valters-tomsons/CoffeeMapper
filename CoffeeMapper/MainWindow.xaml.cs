@@ -26,6 +26,7 @@ namespace CoffeeMapper
         private static string[] KeyNames;
 
         int CenterAxis = 16384;
+        bool HandleKeys = false;
 
 
         public MainWindow()
@@ -106,7 +107,9 @@ namespace CoffeeMapper
             KeyboardHook = new GlobalKeyboardHook();
             KeyboardHook.KeyboardPressed += On_KeyPressed;
         }
+
         //[STAThread]
+        //Gets called when actual key is pressed on keyboard
         private void On_KeyPressed(object sender, GlobalKeyboardHookEventArgs e)
         {
             if(e.KeyboardState == GlobalKeyboardHook.KeyboardState.KeyDown)
@@ -114,16 +117,27 @@ namespace CoffeeMapper
                 if(!Buttons.Contains(e.KeyboardData.VirtualCode))
                 {
                     Buttons.Add(e.KeyboardData.VirtualCode);
+
+                    if(HandleKeys)
+                    {
+                        e.Handled = true;
+                    }
                 }
                 
             }
             else
             {
                 Buttons.Remove(e.KeyboardData.VirtualCode);
+
+                if (HandleKeys)
+                {
+                    e.Handled = true;
+                }
             }
 
         }
 
+        
         private void Buttons_Changed(object sender, NotifyCollectionChangedEventArgs e)
         {
             //= on press
