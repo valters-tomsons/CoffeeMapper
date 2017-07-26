@@ -19,7 +19,9 @@ namespace CoffeeMapper
         static public vJoy.JoystickState iReport;
         static public uint id = 1;
         static public bool allowFeeding = false;
+
         private GlobalKeyboardHook KeyboardHook;
+
         ObservableCollection<int> Buttons = new ObservableCollection<int>();
 
         private static int[] KeyCodes;
@@ -33,12 +35,15 @@ namespace CoffeeMapper
         {
             InitializeComponent();
 
+            //vJoy Driver Test
             vJoySelfTest();
             Debug.WriteLine(JoyTest.ReturnAxes(joystick, id));
             Debug.WriteLine(JoyTest.AcquireDevice(joystick, id));
+
             Buttons.CollectionChanged += Buttons_Changed;
+
+            //Retrieve XML information
             CreateKeyArrays();
-            ResetAxis();
         }
 
         private void vJoySelfTest()
@@ -99,14 +104,27 @@ namespace CoffeeMapper
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            InitializeKeyboard();
+            InitializeKeyboardHook();
+            InitializeMouseHook();
+            ResetAxis();
         }
 
-        private void InitializeKeyboard()
+        private void InitializeKeyboardHook()
         {
             KeyboardHook = new GlobalKeyboardHook();
             KeyboardHook.KeyboardPressed += On_KeyPressed;
         }
+
+        private void InitializeMouseHook()
+        {
+            //GlobalMouseHook.Start();
+            //GlobalMouseHook.MouseAction += On_MouseAction;
+        }
+
+        //private void On_MouseAction(object sender, EventArgs e)
+        //{
+        //    Debug.WriteLine(e);
+        //}
 
         //[STAThread]
         //Gets called when actual key is pressed on keyboard
