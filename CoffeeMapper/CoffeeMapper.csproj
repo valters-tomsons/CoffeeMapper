@@ -130,8 +130,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\KeyMappings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>XCOPY "$(SolutionDir)CoffeeMapper\data\VirtualKeys.xml" "$(TargetDir)\data\" /S /Y</PreBuildEvent>
+    <PreBuildEvent>XCOPY "$(SolutionDir)CoffeeMapper\data\VirtualKeys.xml" "$(TargetDir)\data\" /S /Y
+XCOPY "$(SolutionDir)CoffeeMapper\data\KeyMappings.xml" "$(TargetDir)\data\" /S /Y</PreBuildEvent>
   </PropertyGroup>
 </Project>

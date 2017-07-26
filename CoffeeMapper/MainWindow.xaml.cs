@@ -122,15 +122,27 @@ namespace CoffeeMapper
 
         private void Buttons_Changed(object sender, NotifyCollectionChangedEventArgs e)
         {
+            //= on press
             if(e.NewItems != null)
             {
                 foreach(int key in e.NewItems)
                 {
-                    int loc = Array.IndexOf(KeyCodes, key);
-                    Debug.WriteLine(KeyNames[loc]);
+                    //listen only to supported keys
+                    if (KeyCodes.Contains(key))
+                    {
+                        int loc = Array.IndexOf(KeyCodes, key);
+                        string keyname = KeyNames[loc];
+
+                        if (GetBinds(keyname).Length >= 0)
+                        {
+                            Debug.WriteLine($"{keyname} has {GetBinds(keyname).Length} binds");
+                            
+                        }
+                    }
                 }
             }
 
+            //= on depress
             if(e.OldItems != null)
             {
                 foreach (int key in e.OldItems)
@@ -138,6 +150,31 @@ namespace CoffeeMapper
 
                 }
             }
+        }
+
+        private string[] GetBinds(string key)
+        {
+            string BindsXML = AppDomain.CurrentDomain.BaseDirectory + @"\data\KeyMappings.xml";
+            List<string> Binds = new List<string>();
+            using (XmlReader reader = XmlReader.Create(BindsXML))
+            {
+                while(reader.Read())
+                {
+                    switch(reader.Name)
+                    {
+                        case "KeyMappings":
+                            break;
+                        case "Bind":
+                            string value = reader["actualKey"];
+                            if (value == key)
+                            {
+                                Binds.Add(reader["target"]);
+                            }
+                            break;
+                    }
+                }
+            }
+            return Binds.ToArray();
         }
 
 
