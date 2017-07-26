@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* 
+**
+** This list contains all virtual key codes that CoffeeMapper can listen to.
+** List should only contain keyboard & mouse codes.
+** Feel free to use this anywhere else, credit is appreciated.
+** https://github.com/FaithLV
+**
+*/
+-->
+<VirtualKeys>
+	<Key value="8" equivalent="BACKSPACE"/>
+	<Key value="9" equivalent="TAB"/>
+	<Key value="13" equivalent="ENTER"/>
+	<Key value="16" equivalent="SHIFT"/>
+	<Key value="17" equivalent="CTRL"/>
+	<Key value="18" equivalent="ALT"/>
+	<Key value="20" equivalent="CAPSLOCK"/>
+	<Key value="27" equivalent="ESC"/>
+	<Key value="32" equivalent="SPACEBAR"/>
+	<Key value="36" equivalent="HOME"/>
+	
+	<Key value="37" equivalent="LEFT_ARROW"/>
+	<Key value="38" equivalent="UP_ARROW"/>
+	<Key value="39" equivalent="RIGHT_ARROW"/>
+	<Key value="40" equivalent="DOWN_ARROW"/>
+
+	<Key value="48" equivalent="0"/>
+	<Key value="49" equivalent="1"/>
+	<Key value="50" equivalent="2"/>
+	<Key value="51" equivalent="3"/>
+	<Key value="52" equivalent="4"/>
+	<Key value="53" equivalent="5"/>
+	<Key value="54" equivalent="6"/>
+	<Key value="55" equivalent="7"/>
+	<Key value="56" equivalent="8"/>
+	<Key value="57" equivalent="9"/>
+	
+	<Key value="65" equivalent="A"/>
+	<Key value="66" equivalent="B"/>
+	<Key value="67" equivalent="C"/>
+	<Key value="68" equivalent="D"/>
+	<Key value="69" equivalent="E"/>
+	<Key value="70" equivalent="F"/>
+	<Key value="71" equivalent="G"/>
+	<Key value="72" equivalent="H"/>
+	<Key value="73" equivalent="I"/>
+	<Key value="74" equivalent="J"/>
+	<Key value="75" equivalent="K"/>
+	<Key value="76" equivalent="L"/>
+	<Key value="77" equivalent="M"/>
+	<Key value="78" equivalent="N"/>
+	<Key value="79" equivalent="O"/>
+	<Key value="80" equivalent="P"/>
+	<Key value="81" equivalent="Q"/>
+	<Key value="82" equivalent="R"/>
+	<Key value="83" equivalent="S"/>
+	<Key value="84" equivalent="T"/>
+	<Key value="85" equivalent="U"/>
+	<Key value="86" equivalent="V"/>
+	<Key value="87" equivalent="W"/>
+	<Key value="88" equivalent="X"/>
+	<Key value="89" equivalent="Y"/>
+	<Key value="90" equivalent="Z"/>
+	
+	<Key value="112" equivalent="F1"/>
+	<Key value="113" equivalent="F2"/>
+	<Key value="114" equivalent="F3"/>
+	<Key value="115" equivalent="F4"/>
+	<Key value="116" equivalent="F5"/>
+	<Key value="117" equivalent="F6"/>
+	<Key value="118" equivalent="F7"/>
+	<Key value="119" equivalent="F8"/>
+	<Key value="120" equivalent="F9"/>
+	<Key value="121" equivalent="F10"/>
+	<Key value="122" equivalent="F11"/>
+	<Key value="123" equivalent="F12"/>
+	
+	
+</VirtualKeys>

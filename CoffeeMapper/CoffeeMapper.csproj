@@ -125,5 +125,13 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\VirtualKeys.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>XCOPY "$(SolutionDir)CoffeeMapper\data\VirtualKeys.xml" "$(TargetDir)\data\" /S /Y</PreBuildEvent>
+  </PropertyGroup>
 </Project>

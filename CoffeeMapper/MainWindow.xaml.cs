@@ -61,7 +61,6 @@ namespace CoffeeMapper
             StartButton.IsEnabled = true;
         }
 
-
         private void CreateKeyArrays()
         {
             string VirtualKeysXML = AppDomain.CurrentDomain.BaseDirectory + @"\data\VirtualKeys.xml";
