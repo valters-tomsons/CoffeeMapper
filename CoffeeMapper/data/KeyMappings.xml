@@ -7,5 +7,7 @@
 -->
 <KeyMappings>
 	<Bind actualKey="W" target="button" value="15"/>
-	<Bind actualKey="W" target="button" value="16" />
+	<Bind actualKey="A" target="button" value="16" />
+  <Bind actualKey="S" target="button" value="17" />
+  <Bind actualKey="D" target="button" value="18" />
 </KeyMappings>

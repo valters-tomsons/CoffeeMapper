@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using vJoyInterfaceWrap;
 using System.Linq;
 using System.Xml;
+using System.Runtime.InteropServices;
 
 namespace CoffeeMapper
 {
@@ -132,11 +133,17 @@ namespace CoffeeMapper
                     {
                         int loc = Array.IndexOf(KeyCodes, key);
                         string keyname = KeyNames[loc];
+                        string[] _binds = Binds(keyname);
+                        string[] _values = Values(keyname);
 
-                        if (Binds(keyname).Length >= 0)
+                        if (_binds.Length >= 0)
                         {
-                            Debug.WriteLine($"{keyname} has {Binds(keyname).Length} binds");
-                            
+                            var i = 0;
+                            foreach (string bind in _binds)
+                            {
+                                HandleKey(bind, Convert.ToUInt32(_values[i]), true);
+                                i++;
+                            }
                         }
                     }
                 }
@@ -147,8 +154,33 @@ namespace CoffeeMapper
             {
                 foreach (int key in e.OldItems)
                 {
+                    //listen only to supported keys
+                    if (KeyCodes.Contains(key))
+                    {
+                        int loc = Array.IndexOf(KeyCodes, key);
+                        string keyname = KeyNames[loc];
+                        string[] _binds = Binds(keyname);
+                        string[] _values = Values(keyname);
 
+                        if (_binds.Length >= 0)
+                        {
+                            var i = 0;
+                            foreach (string bind in _binds)
+                            {
+                                HandleKey(bind, Convert.ToUInt32(_values[i]), false);
+                                i++;
+                            }
+                        }
+                    }
                 }
+            }
+        }
+
+        private void HandleKey(string bind, uint value, [Optional]bool press)
+        {
+            if(bind == "button")
+            {
+                joystick.SetBtn(press, id, value);
             }
         }
 
