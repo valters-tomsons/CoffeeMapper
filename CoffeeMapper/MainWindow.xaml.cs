@@ -25,6 +25,8 @@ namespace CoffeeMapper
         private static int[] KeyCodes;
         private static string[] KeyNames;
 
+        int CenterAxis = 16384;
+
 
         public MainWindow()
         {
@@ -35,6 +37,7 @@ namespace CoffeeMapper
             Debug.WriteLine(JoyTest.AcquireDevice(joystick, id));
             Buttons.CollectionChanged += Buttons_Changed;
             CreateKeyArrays();
+            ResetAxis();
         }
 
         private void vJoySelfTest()
@@ -176,11 +179,34 @@ namespace CoffeeMapper
             }
         }
 
-        private void HandleKey(string bind, uint value, [Optional]bool press)
+        private void HandleKey(string bind, uint value, bool press)
         {
+            //Handle all buttons
             if(bind == "button")
             {
                 joystick.SetBtn(press, id, value);
+                return;
+            }
+
+            //Handle all axis
+            if(bind.Contains("HID_USAGES."))
+            {
+                int _value = Convert.ToInt32(value);
+
+                //Convert string axis to HID_USAGES
+                HID_USAGES axis = (HID_USAGES)Enum.Parse(typeof(HID_USAGES), bind.Replace("HID_USAGES.", String.Empty));
+
+                if (press == true)
+                {
+                    joystick.SetAxis(_value, id, axis);
+                }
+                else
+                {
+                    joystick.SetAxis(16384, id, axis);
+                }
+                
+                
+                
             }
         }
 
@@ -236,16 +262,13 @@ namespace CoffeeMapper
             return _values.ToArray();
         }
 
-
-        private void PressBtn(uint btnId)
+        //Set all axis to center
+        private void ResetAxis()
         {
-            joystick.SetBtn(true, id, btnId);
+            foreach(HID_USAGES axis in Enum.GetValues(typeof(HID_USAGES)))
+            {
+                joystick.SetAxis(CenterAxis, id, axis);
+            }
         }
-
-        private void DeBtn(uint btnId)
-        {
-            joystick.SetBtn(false, id, btnId);
-        }
-
     }
 }
