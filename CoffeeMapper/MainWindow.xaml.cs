@@ -133,9 +133,9 @@ namespace CoffeeMapper
                         int loc = Array.IndexOf(KeyCodes, key);
                         string keyname = KeyNames[loc];
 
-                        if (GetBinds(keyname).Length >= 0)
+                        if (Binds(keyname).Length >= 0)
                         {
-                            Debug.WriteLine($"{keyname} has {GetBinds(keyname).Length} binds");
+                            Debug.WriteLine($"{keyname} has {Binds(keyname).Length} binds");
                             
                         }
                     }
@@ -152,10 +152,11 @@ namespace CoffeeMapper
             }
         }
 
-        private string[] GetBinds(string key)
+        //returns all bind types (eg. button/axis/etc.)
+        private string[] Binds(string key)
         {
             string BindsXML = AppDomain.CurrentDomain.BaseDirectory + @"\data\KeyMappings.xml";
-            List<string> Binds = new List<string>();
+            List<string> _binds = new List<string>();
             using (XmlReader reader = XmlReader.Create(BindsXML))
             {
                 while(reader.Read())
@@ -168,13 +169,39 @@ namespace CoffeeMapper
                             string value = reader["actualKey"];
                             if (value == key)
                             {
-                                Binds.Add(reader["target"]);
+                                _binds.Add(reader["target"]);
                             }
                             break;
                     }
                 }
             }
-            return Binds.ToArray();
+            return _binds.ToArray();
+        }
+
+        //returns actual value for bind type (eg. button 13, x axis 31233)
+        private string[] Values(string key)
+        {
+            string BindsXML = AppDomain.CurrentDomain.BaseDirectory + @"\data\KeyMappings.xml";
+            List<string> _values = new List<string>();
+            using (XmlReader reader = XmlReader.Create(BindsXML))
+            {
+                while(reader.Read())
+                {
+                    switch(reader.Name)
+                    {
+                        case "KeyMappings":
+                            break;
+                        case "Bind":
+                            string value = reader["actualKey"];
+                            if (value == key)
+                            {
+                                _values.Add(reader["value"]);
+                            }
+                            break;
+                    }
+                }
+            }
+            return _values.ToArray();
         }
 
 

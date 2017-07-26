@@ -6,6 +6,6 @@
 */
 -->
 <KeyMappings>
-	<Bind actualKey="W" target="btn13"/>
-	<Bind actualKey="W" target="btn12"/>
+	<Bind actualKey="W" target="button" value="15"/>
+	<Bind actualKey="W" target="button" value="16" />
 </KeyMappings>
