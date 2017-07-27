@@ -7,8 +7,6 @@ using System.Windows;
 using vJoyInterfaceWrap;
 using System.Linq;
 using System.Xml;
-using Gma.System.MouseKeyHook;
-using System.Windows.Forms;
 using System.Windows.Threading;
 
 namespace CoffeeMapper
@@ -22,7 +20,6 @@ namespace CoffeeMapper
         static public bool allowFeeding = false;
 
         private GlobalKeyboardHook KeyboardHook;
-        private IKeyboardMouseEvents m_GlobalHook = Hook.GlobalEvents();
         DispatcherTimer mouseTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(16) };
 
         ObservableCollection<int> Buttons = new ObservableCollection<int>();
@@ -34,6 +31,7 @@ namespace CoffeeMapper
         bool HandleKeys = false;
         bool TrapCursor = true;
 
+        int[] oldPos = { 0, 0 };
 
         public MainWindow()
         {
@@ -111,7 +109,7 @@ namespace CoffeeMapper
             InitializeKeyboardHook();
             InitializeMouseHook();
             
-            ResetAxis();
+            ResetAllAxis();
         }
 
         private void InitializeKeyboardHook()
@@ -129,36 +127,39 @@ namespace CoffeeMapper
         private void mouseTimer_Tick(object sender, EventArgs e)
         {
 
-            if(MouseCursor.Y > MouseCursor.yC)
+            if(MouseCursor.Y > oldPos[1])
             {
-                int sum = (MouseCursor.Y - MouseCursor.yC) * 500;
-                Debug.WriteLine(sum);
-                joystick.SetAxis((16384 + sum), id, HID_USAGES.HID_USAGE_Y);
+                int sum = (MouseCursor.Y - oldPos[1]) * 500;
+                //Debug.WriteLine(sum);
+                joystick.SetAxis((16384 + sum), id, HID_USAGES.HID_USAGE_RY);
             }
 
-            if (MouseCursor.Y < MouseCursor.yC)
+            if (MouseCursor.Y < oldPos[1])
             {
-                int sum = (MouseCursor.yC - MouseCursor.Y) * 500;
-                Debug.WriteLine(sum);
-                joystick.SetAxis((16384 - sum), id, HID_USAGES.HID_USAGE_Y);
+                int sum = (oldPos[1] - MouseCursor.Y) * 500;
+                //Debug.WriteLine(sum);
+                joystick.SetAxis((16384 - sum), id, HID_USAGES.HID_USAGE_RY);
             }
 
-            if (MouseCursor.X > MouseCursor.xC)
+            if (MouseCursor.X > oldPos[0])
             {
-                int sum = (MouseCursor.X - MouseCursor.xC) * 500;
-                Debug.WriteLine(sum);
-                joystick.SetAxis((16384 + sum), id, HID_USAGES.HID_USAGE_X);
+                int sum = (MouseCursor.X - oldPos[0]) * 500;
+                //Debug.WriteLine(sum);
+                joystick.SetAxis((16384 + sum), id, HID_USAGES.HID_USAGE_RX);
             }
-            else if (MouseCursor.X < MouseCursor.xC)
+            else if (MouseCursor.X < oldPos[0])
             {
-                int sum = (MouseCursor.xC - MouseCursor.X) * 500;
-                Debug.WriteLine(sum);
-                joystick.SetAxis((16384 - sum), id, HID_USAGES.HID_USAGE_X);
+                int sum = (oldPos[0] - MouseCursor.X) * 500;
+                //Debug.WriteLine(sum);
+                joystick.SetAxis((16384 - sum), id, HID_USAGES.HID_USAGE_RX);
             }
             else
             {
-                ResetAxis();
+                ResetAxis("RIGHT");
             }
+
+            oldPos[0] = MouseCursor.X;
+            oldPos[1] = MouseCursor.Y;
             
             if(TrapCursor)
             {
@@ -349,11 +350,28 @@ namespace CoffeeMapper
         }
 
         //Set all axis to center
-        private void ResetAxis()
+        private void ResetAllAxis()
         {
             foreach(HID_USAGES axis in Enum.GetValues(typeof(HID_USAGES)))
             {
                 joystick.SetAxis(CenterAxis, id, axis);
+            }
+        }
+
+        private void ResetAxis(string axis)
+        {
+            if(axis == "LEFT")
+            {
+                joystick.SetAxis(CenterAxis, id, HID_USAGES.HID_USAGE_X);
+                joystick.SetAxis(CenterAxis, id, HID_USAGES.HID_USAGE_Y);
+                return;
+            }
+
+            if(axis == "RIGHT")
+            {
+                joystick.SetAxis(CenterAxis, id, HID_USAGES.HID_USAGE_RX);
+                joystick.SetAxis(CenterAxis, id, HID_USAGES.HID_USAGE_RY);
+                return;
             }
         }
     }
