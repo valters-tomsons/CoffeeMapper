@@ -133,8 +133,7 @@ namespace CoffeeMapper
                 //Debug.WriteLine(sum);
                 joystick.SetAxis((16384 + sum), id, HID_USAGES.HID_USAGE_RY);
             }
-
-            if (MouseCursor.Y < oldPos[1])
+            else if (MouseCursor.Y < oldPos[1])
             {
                 int sum = (oldPos[1] - MouseCursor.Y) * 500;
                 //Debug.WriteLine(sum);
@@ -153,19 +152,16 @@ namespace CoffeeMapper
                 //Debug.WriteLine(sum);
                 joystick.SetAxis((16384 - sum), id, HID_USAGES.HID_USAGE_RX);
             }
-            else
-            {
-                ResetAxis("RIGHT");
-            }
-
-            oldPos[0] = MouseCursor.X;
-            oldPos[1] = MouseCursor.Y;
             
             if(TrapCursor)
             {
                 MouseCursor.Center();
             }
-            
+
+            oldPos[0] = MouseCursor.X;
+            oldPos[1] = MouseCursor.Y;
+
+
         }
 
         //[STAThread]
