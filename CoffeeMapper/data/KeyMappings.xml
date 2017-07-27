@@ -15,4 +15,11 @@
   <Bind actualKey="S" target="HID_USAGES.HID_USAGE_Y" value="32768" />
 	<Bind actualKey="A" target="HID_USAGES.HID_USAGE_X" value="1" />
   <Bind actualKey="D" target="HID_USAGES.HID_USAGE_X" value="32768" />
+
+  <Bind actualKey="ENTER" target="button" value="1"/>
+  <Bind actualKey="E" target="button" value="2"/>
+  <Bind actualKey="CTRL" target="button" value="3"/>
+  <Bind actualKey="C" target="button" value="4"/>
+  <Bind actualKey="F" target="button" value="5"/>
+  
 </KeyMappings>

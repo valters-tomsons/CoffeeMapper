@@ -4,11 +4,12 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Threading;
 using vJoyInterfaceWrap;
 using System.Linq;
 using System.Xml;
-using System.Runtime.InteropServices;
+using Gma.System.MouseKeyHook;
+using System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace CoffeeMapper
 {
@@ -21,6 +22,8 @@ namespace CoffeeMapper
         static public bool allowFeeding = false;
 
         private GlobalKeyboardHook KeyboardHook;
+        private IKeyboardMouseEvents m_GlobalHook = Hook.GlobalEvents();
+        DispatcherTimer mouseTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(16) };
 
         ObservableCollection<int> Buttons = new ObservableCollection<int>();
 
@@ -29,6 +32,7 @@ namespace CoffeeMapper
 
         int CenterAxis = 16384;
         bool HandleKeys = false;
+        bool TrapCursor = true;
 
 
         public MainWindow()
@@ -106,6 +110,7 @@ namespace CoffeeMapper
         {
             InitializeKeyboardHook();
             InitializeMouseHook();
+            
             ResetAxis();
         }
 
@@ -117,14 +122,50 @@ namespace CoffeeMapper
 
         private void InitializeMouseHook()
         {
-            //GlobalMouseHook.Start();
-            //GlobalMouseHook.MouseAction += On_MouseAction;
+            mouseTimer.Tick += mouseTimer_Tick;
+            mouseTimer.Start();
         }
 
-        //private void On_MouseAction(object sender, EventArgs e)
-        //{
-        //    Debug.WriteLine(e);
-        //}
+        private void mouseTimer_Tick(object sender, EventArgs e)
+        {
+
+            if(MouseCursor.Y > MouseCursor.yC)
+            {
+                int sum = (MouseCursor.Y - MouseCursor.yC) * 500;
+                Debug.WriteLine(sum);
+                joystick.SetAxis((16384 + sum), id, HID_USAGES.HID_USAGE_Y);
+            }
+
+            if (MouseCursor.Y < MouseCursor.yC)
+            {
+                int sum = (MouseCursor.yC - MouseCursor.Y) * 500;
+                Debug.WriteLine(sum);
+                joystick.SetAxis((16384 - sum), id, HID_USAGES.HID_USAGE_Y);
+            }
+
+            if (MouseCursor.X > MouseCursor.xC)
+            {
+                int sum = (MouseCursor.X - MouseCursor.xC) * 500;
+                Debug.WriteLine(sum);
+                joystick.SetAxis((16384 + sum), id, HID_USAGES.HID_USAGE_X);
+            }
+            else if (MouseCursor.X < MouseCursor.xC)
+            {
+                int sum = (MouseCursor.xC - MouseCursor.X) * 500;
+                Debug.WriteLine(sum);
+                joystick.SetAxis((16384 - sum), id, HID_USAGES.HID_USAGE_X);
+            }
+            else
+            {
+                ResetAxis();
+            }
+            
+            if(TrapCursor)
+            {
+                MouseCursor.Center();
+            }
+            
+        }
 
         //[STAThread]
         //Gets called when actual key is pressed on keyboard
@@ -132,7 +173,7 @@ namespace CoffeeMapper
         {
             if(e.KeyboardState == GlobalKeyboardHook.KeyboardState.KeyDown)
             {
-                if(!Buttons.Contains(e.KeyboardData.VirtualCode))
+                if (!Buttons.Contains(e.KeyboardData.VirtualCode))
                 {
                     Buttons.Add(e.KeyboardData.VirtualCode);
 
@@ -170,6 +211,21 @@ namespace CoffeeMapper
                         string keyname = KeyNames[loc];
                         string[] _binds = Binds(keyname);
                         string[] _values = Values(keyname);
+
+                        if (keyname == "F10")
+                        {
+                            TrapCursor = !TrapCursor;
+                        }
+
+                        if (keyname == "F11")
+                        {
+                            mouseTimer.Start();
+                        }
+
+                        if (keyname == "F12")
+                        {
+                            mouseTimer.Stop();
+                        }
 
                         if (_binds.Length >= 0)
                         {
@@ -236,9 +292,7 @@ namespace CoffeeMapper
                 {
                     joystick.SetAxis(16384, id, axis);
                 }
-                
-                
-                
+
             }
         }
 
