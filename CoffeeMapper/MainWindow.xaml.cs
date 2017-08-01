@@ -27,11 +27,12 @@ namespace CoffeeMapper
         private static int[] KeyCodes;
         private static string[] KeyNames;
 
+        int[] oldPos = { 0, 0 };
+
         int CenterAxis = 16384;
         bool HandleKeys = false;
         bool TrapCursor = true;
-
-        int[] oldPos = { 0, 0 };
+        public int MouseSens = 600;
 
         public MainWindow()
         {
@@ -129,26 +130,26 @@ namespace CoffeeMapper
 
             if(MouseCursor.Y > oldPos[1])
             {
-                int sum = (MouseCursor.Y - oldPos[1]) * 500;
+                int sum = (MouseCursor.Y - oldPos[1]) * MouseSens;
                 //Debug.WriteLine(sum);
                 joystick.SetAxis((16384 + sum), id, HID_USAGES.HID_USAGE_RY);
             }
             else if (MouseCursor.Y < oldPos[1])
             {
-                int sum = (oldPos[1] - MouseCursor.Y) * 500;
+                int sum = (oldPos[1] - MouseCursor.Y) * MouseSens;
                 //Debug.WriteLine(sum);
                 joystick.SetAxis((16384 - sum), id, HID_USAGES.HID_USAGE_RY);
             }
 
             if (MouseCursor.X > oldPos[0])
             {
-                int sum = (MouseCursor.X - oldPos[0]) * 500;
+                int sum = (MouseCursor.X - oldPos[0]) * MouseSens;
                 //Debug.WriteLine(sum);
                 joystick.SetAxis((16384 + sum), id, HID_USAGES.HID_USAGE_RX);
             }
             else if (MouseCursor.X < oldPos[0])
             {
-                int sum = (oldPos[0] - MouseCursor.X) * 500;
+                int sum = (oldPos[0] - MouseCursor.X) * MouseSens;
                 //Debug.WriteLine(sum);
                 joystick.SetAxis((16384 - sum), id, HID_USAGES.HID_USAGE_RX);
             }
