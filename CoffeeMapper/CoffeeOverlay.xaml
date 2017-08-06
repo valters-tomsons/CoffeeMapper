@@ -1,0 +1,19 @@
+﻿<Window x:Class="CoffeeMapper.CoffeeOverlay"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CoffeeMapper"
+        mc:Ignorable="d"
+        Title="CoffeeOverlay"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        IsHitTestVisible="False" Topmost="True" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+
+    <Grid x:Name="OverlayGrid">
+        <!--Need a rectangle to hide cursor-->
+        <Rectangle Fill="Black" Opacity="0.01" />
+    </Grid>
+    
+</Window>

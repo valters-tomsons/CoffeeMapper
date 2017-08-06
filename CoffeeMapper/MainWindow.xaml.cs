@@ -45,9 +45,14 @@ namespace CoffeeMapper
 
             Buttons.CollectionChanged += Buttons_Changed;
 
+            CoffeeOverlay overlay = new CoffeeOverlay();
+            overlay.Show();
+
             //Retrieve XML information
             CreateKeyArrays();
         }
+
+        
 
         private void vJoySelfTest()
         {
