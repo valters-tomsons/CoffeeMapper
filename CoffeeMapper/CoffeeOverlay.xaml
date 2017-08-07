@@ -22,7 +22,7 @@
         
         <Grid x:Name="NotificationBar" HorizontalAlignment="Left" Width="450"  VerticalAlignment="Top" Margin="0,80">
             <Rectangle Width="450" Height="60" Fill="White"/>
-            <TextBlock Margin="15,0" VerticalAlignment="Center" FontSize="28" FontFamily="Roboto Light" Text="Notification Text goes here" x:Name="NotificationText" />
+            <TextBlock Margin="50,0" VerticalAlignment="Center" FontSize="28" FontFamily="Roboto Light" Text="CoffeeMapper notification" x:Name="NotificationText" />
         </Grid>
 
     </Grid>
