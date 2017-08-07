@@ -200,7 +200,6 @@ namespace CoffeeMapper
 
         }
 
-        
         private void Buttons_Changed(object sender, NotifyCollectionChangedEventArgs e)
         {
             //= on press
@@ -383,6 +382,11 @@ namespace CoffeeMapper
                 joystick.SetAxis(CenterAxis, id, HID_USAGES.HID_USAGE_RY);
                 return;
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            overlay.Close();
         }
     }
 }

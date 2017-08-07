@@ -10,7 +10,7 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
-        Title="CoffeeMapper" Height="720" Width="1280" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="CoffeeMapper_EXE.ico">
+        Title="CoffeeMapper" Height="720" Width="1280" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="CoffeeMapper_EXE.ico" Closing="Window_Closing">
     <Grid>
         <TextBlock x:Name="DriverLabel" FontFamily="Roboto Light" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="80"/>
         <Button x:Name="StartButton" Content="Start" Height="80" Width="200" IsEnabled="False" Click="StartButton_Click"/>
