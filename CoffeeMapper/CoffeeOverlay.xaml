@@ -9,11 +9,22 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
-        IsHitTestVisible="False" Topmost="True" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        IsHitTestVisible="False" 
+        Topmost="True" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen" 
+        WindowState="Maximized">
 
-    <Grid x:Name="OverlayGrid">
-        <!--Need a rectangle to hide cursor-->
-        <Rectangle Fill="Black" Opacity="0.01" />
+    <Grid x:Name="OverlayGrid" IsHitTestVisible="False">
+        
+        <!--Need a rectangle to capture & hide cursor-->
+        <Rectangle Fill="Black" Opacity="0" />
+        
+        <Grid x:Name="NotificationBar" HorizontalAlignment="Left" Width="450"  VerticalAlignment="Top" Margin="0,80">
+            <Rectangle Width="450" Height="60" Fill="White"/>
+            <TextBlock Margin="15,0" VerticalAlignment="Center" FontSize="28" FontFamily="Roboto Light" Text="Notification Text goes here" x:Name="NotificationText" />
+        </Grid>
+
     </Grid>
     
 </Window>

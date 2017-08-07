@@ -24,6 +24,8 @@ namespace CoffeeMapper
 
         ObservableCollection<int> Buttons = new ObservableCollection<int>();
 
+        CoffeeOverlay overlay;
+
         private static int[] KeyCodes;
         private static string[] KeyNames;
 
@@ -44,9 +46,6 @@ namespace CoffeeMapper
             Debug.WriteLine(JoyTest.AcquireDevice(joystick, id));
 
             Buttons.CollectionChanged += Buttons_Changed;
-
-            CoffeeOverlay overlay = new CoffeeOverlay();
-            overlay.Show();
 
             //Retrieve XML information
             CreateKeyArrays();
@@ -114,7 +113,9 @@ namespace CoffeeMapper
         {
             InitializeKeyboardHook();
             InitializeMouseHook();
-            
+
+            overlay = new CoffeeOverlay();
+            overlay.Show();
             ResetAllAxis();
         }
 
@@ -215,19 +216,26 @@ namespace CoffeeMapper
                         string[] _binds = Binds(keyname);
                         string[] _values = Values(keyname);
 
+                        //Configuration mode
                         if (keyname == "F10")
                         {
                             TrapCursor = !TrapCursor;
+                            Dispatcher.Invoke(new Action(() => overlay.PushNotification($"TrapCursor = {TrapCursor}")));
                         }
 
-                        if (keyname == "F11")
+                        //Turn on CoffeeMapper
+                        if (keyname == "F12")
                         {
+                            Dispatcher.Invoke(new Action(() => overlay.PushNotification("CoffeeMapper running!")));
                             mouseTimer.Start();
                         }
 
-                        if (keyname == "F12")
+                        //Turn off CoffeeMapper
+                        if (keyname == "F11")
                         {
+                            Dispatcher.Invoke(new Action(()=> overlay.PushNotification("CoffeeMapper stopped!")));
                             mouseTimer.Stop();
+                            
                         }
 
                         if (_binds.Length >= 0)
