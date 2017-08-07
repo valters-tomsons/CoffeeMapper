@@ -153,6 +153,14 @@
   <ItemGroup>
     <Resource Include="CoffeeMapper_EXE.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\CoffeeMapper_Activated.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="data\CoffeeMapper_Deactivated.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>XCOPY "$(SolutionDir)CoffeeMapper\data\VirtualKeys.xml" "$(TargetDir)\data\" /S /Y
