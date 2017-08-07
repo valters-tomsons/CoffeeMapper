@@ -46,8 +46,6 @@ namespace CoffeeMapper
             da.Duration = TimeSpan.FromSeconds(0.2);
             NotificationBar.BeginAnimation(Grid.WidthProperty, da);
 
-            
-
             //DoubleAnimation da2 = new DoubleAnimation();
             //da.From = 450;
             //da.To = 0;
