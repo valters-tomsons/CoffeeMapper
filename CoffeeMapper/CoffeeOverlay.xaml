@@ -16,16 +16,15 @@
         WindowState="Maximized">
 
     <Grid x:Name="OverlayGrid" IsHitTestVisible="False">
-        
+
         <!--Need a rectangle to capture & hide cursor-->
         <Rectangle Fill="Black" Opacity="0" />
-        
+
         <Grid x:Name="NotificationBar" HorizontalAlignment="Left" Width="450"  VerticalAlignment="Top" Margin="0,80">
-            
-            <Rectangle Width="450" Height="60" Fill="White"/>
-            <TextBlock Margin="50,0" VerticalAlignment="Center" FontSize="28" FontFamily="Roboto Light" Text="CoffeeMapper notification" x:Name="NotificationText" />
+            <Image x:Name="NotificationImage" Source="data/CoffeeMapper_Info.png"/>
+            <TextBlock Margin="242,0,0,0" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="24" FontFamily="Roboto Light" Text="CoffeeMapper notification" x:Name="NotificationText" Height="61" />
         </Grid>
 
     </Grid>
-    
+
 </Window>

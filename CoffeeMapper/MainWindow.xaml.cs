@@ -226,14 +226,14 @@ namespace CoffeeMapper
                         //Turn on CoffeeMapper
                         if (keyname == "F12")
                         {
-                            Dispatcher.Invoke(new Action(() => overlay.PushNotification("CoffeeMapper running!")));
+                            Dispatcher.Invoke(new Action(() => overlay.PushNotification("activated")));
                             mouseTimer.Start();
                         }
 
                         //Turn off CoffeeMapper
                         if (keyname == "F11")
                         {
-                            Dispatcher.Invoke(new Action(()=> overlay.PushNotification("CoffeeMapper stopped!")));
+                            Dispatcher.Invoke(new Action(()=> overlay.PushNotification("deactivated")));
                             mouseTimer.Stop();
                             
                         }
