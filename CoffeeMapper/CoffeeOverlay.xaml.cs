@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace CoffeeMapper
 {
@@ -27,13 +28,30 @@ namespace CoffeeMapper
         [DllImport("user32.dll")]
         public static extern int ShowCursor(bool bShow);
 
+        private DispatcherTimer NotificationTimer;
+
         public CoffeeOverlay()
         {
             InitializeComponent();
 
             this.Width = SystemParameters.PrimaryScreenWidth;
             this.Height = SystemParameters.PrimaryScreenHeight;
+
+            NotificationBar.Width = 0;
+
+            NotificationTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
+            NotificationTimer.Tick += NotificationTimer_Tick;
             //ShowCursor(false);
+        }
+
+        private void NotificationTimer_Tick(object sender, EventArgs e)
+        {
+            DoubleAnimation da = new DoubleAnimation();
+            da.From = 450;
+            da.To = 0;
+            da.Duration = TimeSpan.FromSeconds(0.2);
+            Dispatcher.Invoke(new Action(() => NotificationBar.BeginAnimation(Grid.WidthProperty, da)));
+            NotificationTimer.Stop();
         }
 
         public void PushNotification(string _msg)
@@ -59,6 +77,8 @@ namespace CoffeeMapper
             da.To = 450;
             da.Duration = TimeSpan.FromSeconds(0.2);
             NotificationBar.BeginAnimation(Grid.WidthProperty, da);
+
+            NotificationTimer.Start();
         }
     }
 }

@@ -103,6 +103,7 @@
     <Compile Include="CoffeeOverlay.xaml.cs">
       <DependentUpon>CoffeeOverlay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DllInjection.cs" />
     <Compile Include="GetKeys.cs" />
     <Compile Include="JoyTest.cs" />
     <Compile Include="MainWindow.xaml.cs">

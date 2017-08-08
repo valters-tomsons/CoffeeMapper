@@ -49,9 +49,9 @@ namespace CoffeeMapper
 
             //Retrieve XML information
             CreateKeyArrays();
-        }
 
-        
+            HideMouseCursor();
+        }
 
         private void vJoySelfTest()
         {
@@ -386,7 +386,18 @@ namespace CoffeeMapper
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            overlay.Close();
+            if(overlay != null)
+            {
+                overlay.Close();
+            }
+            
+        }
+
+        private static void HideMouseCursor()
+        {
+            Debug.WriteLine("Injecting dll...");
+            DllInjector inject = new DllInjector();
+            Debug.WriteLine(inject.Inject("Cemu", @"C:\Users\infin\Documents\Visual Studio 2017\Projects\CoffeeMapper\x64\Debug\CursorHook.dll"));
         }
     }
 }
