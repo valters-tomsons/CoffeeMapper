@@ -3,10 +3,7 @@
 
 DWORD WINAPI Hide_Mouse(LPVOID lpParam)
 {
-	for (int i = 50; i > 0; i++)
-	{
-		SetCursor(false);
-	}
+	while (ShowCursor(FALSE) >= 0);
 	return TRUE;
 }
 
