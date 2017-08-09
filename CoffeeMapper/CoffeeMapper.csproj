@@ -152,7 +152,9 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="CoffeeMapper_EXE.ico" />
+    <Resource Include="CoffeeMapper_EXE.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="data\CoffeeMapper_Activated.png">

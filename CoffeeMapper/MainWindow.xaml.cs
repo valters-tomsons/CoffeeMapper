@@ -24,6 +24,8 @@ namespace CoffeeMapper
 
         ObservableCollection<int> Buttons = new ObservableCollection<int>();
 
+        System.Windows.Forms.NotifyIcon trayicon;
+
         CoffeeOverlay overlay;
 
         private static int[] KeyCodes;
@@ -39,6 +41,7 @@ namespace CoffeeMapper
         public MainWindow()
         {
             InitializeComponent();
+            InitializeTrayIcon();
 
             //vJoy Driver Test
             vJoySelfTest();
@@ -49,8 +52,26 @@ namespace CoffeeMapper
 
             //Retrieve XML information
             CreateKeyArrays();
-
             HideMouseCursor();
+        }
+
+        private void InitializeTrayIcon()
+        {
+            trayicon = new System.Windows.Forms.NotifyIcon();
+            trayicon.Icon = new System.Drawing.Icon("CoffeeMapper_EXE.ico");
+
+            trayicon.BalloonTipTitle = "CoffeeMapper will keep running in the background!";
+            trayicon.BalloonTipText = "No Worries!";
+            trayicon.ShowBalloonTip(1000);
+            trayicon.Click += BringBackWindow;
+        }
+
+        private void BringBackWindow(object sender, EventArgs e)
+        {
+            Dispatcher.Invoke(new Action(() => WindowState = WindowState.Normal));
+            Dispatcher.Invoke(new Action(() => Show()));
+            Dispatcher.Invoke(new Action(() => trayicon.Visible = false));
+            Activate();
         }
 
         private void vJoySelfTest()
@@ -398,6 +419,15 @@ namespace CoffeeMapper
             Debug.WriteLine("Injecting dll...");
             DllInjector inject = new DllInjector();
             Debug.WriteLine(inject.Inject("Cemu", @"C:\Users\infin\Documents\Visual Studio 2017\Projects\CoffeeMapper\x64\Debug\CursorHook.dll"));
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Minimized)
+            {
+                trayicon.Visible = true;
+                Hide();
+            }
         }
     }
 }

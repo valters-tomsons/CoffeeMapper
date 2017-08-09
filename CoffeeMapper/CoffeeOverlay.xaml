@@ -13,7 +13,8 @@
         Topmost="True" 
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen" 
-        WindowState="Maximized">
+        WindowState="Maximized" Cursor="None"
+        ShowInTaskbar="False">
 
     <Grid x:Name="OverlayGrid" IsHitTestVisible="False">
 
@@ -22,7 +23,7 @@
 
         <Grid x:Name="NotificationBar" HorizontalAlignment="Left" Width="450"  VerticalAlignment="Top" Margin="0,80">
             <Image x:Name="NotificationImage" Source="data/CoffeeMapper_Info.png"/>
-            <TextBlock Margin="242,0,0,0" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="24" FontFamily="Roboto Light" Text="CoffeeMapper notification" x:Name="NotificationText" Height="61" />
+            <TextBlock Margin="210,0,0,0" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="24" FontFamily="Roboto Light" Text="notification" x:Name="NotificationText" Height="30" />
         </Grid>
 
     </Grid>
