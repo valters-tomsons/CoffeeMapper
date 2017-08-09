@@ -67,7 +67,16 @@ namespace CoffeeMapper
             da.Duration = TimeSpan.FromSeconds(0.2);
             NotificationBar.BeginAnimation(Grid.WidthProperty, da);
 
-            NotificationTimer.Start();
+            if(NotificationTimer.IsEnabled)
+            {
+                NotificationTimer.Stop();
+                NotificationTimer.Start();
+            }
+            else
+            {
+                NotificationTimer.Start();
+            }
+            
         }
     }
 }
