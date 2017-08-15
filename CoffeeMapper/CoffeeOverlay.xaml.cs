@@ -49,10 +49,12 @@ namespace CoffeeMapper
 
             if (_msg == "activated")
             {
+                MouseCursor.Show = false;
                 NotificationImage.Source = new BitmapImage(new Uri("/data/CoffeeMapper_Activated.png",UriKind.Relative));
             }
             else if (_msg == "deactivated")
             {
+                MouseCursor.Show = true;
                 NotificationImage.Source = new BitmapImage(new Uri("/data/CoffeeMapper_Deactivated.png", UriKind.Relative));
             }
             else

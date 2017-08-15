@@ -1,9 +1,17 @@
 #include <stdio.h>
 #include <Windows.h>
+#include <iostream>
+#include <fstream>
+#include <string> 
+using namespace std;
 
 DWORD WINAPI Hide_Mouse(LPVOID lpParam)
 {
-	while (ShowCursor(FALSE) >= 0);
+	HCURSOR count = SetCursor(NULL);
+
+	ofstream out;
+	out.open("C:\\Users\\infin\\Desktop\\log.txt");
+	out << "Number: " << count;
 	return TRUE;
 }
 

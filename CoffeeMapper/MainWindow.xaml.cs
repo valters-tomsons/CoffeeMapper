@@ -52,7 +52,6 @@ namespace CoffeeMapper
 
             //Retrieve XML information
             CreateKeyArrays();
-            HideMouseCursor();
         }
 
         private void InitializeTrayIcon()
@@ -240,6 +239,7 @@ namespace CoffeeMapper
                         if (keyname == "F10")
                         {
                             TrapCursor = !TrapCursor;
+                            Debug.WriteLine(MouseCursor.Show);
                             Dispatcher.Invoke(new Action(() => overlay.PushNotification($"TrapCursor = {TrapCursor}")));
                         }
 
@@ -407,18 +407,12 @@ namespace CoffeeMapper
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(overlay != null)
+            MouseCursor.Show = true;
+            if (overlay != null)
             {
                 overlay.Close();
             }
             
-        }
-
-        private static void HideMouseCursor()
-        {
-            Debug.WriteLine("Injecting dll...");
-            DllInjector inject = new DllInjector();
-            Debug.WriteLine(inject.Inject("Cemu", @"C:\Users\infin\Documents\Visual Studio 2017\Projects\CoffeeMapper\x64\Debug\CursorHook.dll"));
         }
 
         private void Window_StateChanged(object sender, EventArgs e)

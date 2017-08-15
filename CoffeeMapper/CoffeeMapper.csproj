@@ -103,7 +103,6 @@
     <Compile Include="CoffeeOverlay.xaml.cs">
       <DependentUpon>CoffeeOverlay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DllInjection.cs" />
     <Compile Include="GetKeys.cs" />
     <Compile Include="JoyTest.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -166,6 +165,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="data\CoffeeMapper_Info.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\blank.cur">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
