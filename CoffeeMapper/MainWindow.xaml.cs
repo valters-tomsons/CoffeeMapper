@@ -148,7 +148,6 @@ namespace CoffeeMapper
         private void InitializeMouseHook()
         {
             mouseTimer.Tick += mouseTimer_Tick;
-            mouseTimer.Start();
         }
 
         private void mouseTimer_Tick(object sender, EventArgs e)
@@ -235,29 +234,6 @@ namespace CoffeeMapper
                         string[] _binds = Binds(keyname);
                         string[] _values = Values(keyname);
 
-                        //Configuration mode
-                        if (keyname == "F10")
-                        {
-                            TrapCursor = !TrapCursor;
-                            Debug.WriteLine(MouseCursor.Show);
-                            Dispatcher.Invoke(new Action(() => overlay.PushNotification($"TrapCursor = {TrapCursor}")));
-                        }
-
-                        //Turn on CoffeeMapper
-                        if (keyname == "F12")
-                        {
-                            Dispatcher.Invoke(new Action(() => overlay.PushNotification("activated")));
-                            mouseTimer.Start();
-                        }
-
-                        //Turn off CoffeeMapper
-                        if (keyname == "F11")
-                        {
-                            Dispatcher.Invoke(new Action(()=> overlay.PushNotification("deactivated")));
-                            mouseTimer.Stop();
-                            
-                        }
-
                         if (_binds.Length >= 0)
                         {
                             var i = 0;
@@ -324,6 +300,31 @@ namespace CoffeeMapper
                     joystick.SetAxis(16384, id, axis);
                 }
 
+            }
+
+            //CoffeeMapper action keys
+            if(bind.Contains("CoffeeAction") && press == true)
+            {
+                if(value == 0)
+                {
+                    Dispatcher.Invoke(new Action(() => overlay.PushNotification("deactivated")));
+                    mouseTimer.Stop();
+                }
+                if(value == 1)
+                {
+                    Dispatcher.Invoke(new Action(() => overlay.PushNotification("activated")));
+                    mouseTimer.Start();
+                }
+                if(value == 2)
+                {
+                    TrapCursor = !TrapCursor;
+                    Dispatcher.Invoke(new Action(() => overlay.PushNotification($"TrapCursor = {TrapCursor}")));
+                }
+                if(value == 3)
+                {
+                    MouseCursor.Show = !MouseCursor.Show;
+                    Dispatcher.Invoke(new Action(() => overlay.PushNotification($"Show = {MouseCursor.Show}")));
+                }
             }
         }
 

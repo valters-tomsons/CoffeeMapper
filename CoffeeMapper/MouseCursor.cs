@@ -11,8 +11,6 @@ namespace CoffeeMapper
         [DllImport("User32.dll")] private static extern bool SetCursorPos(int X, int Y);
         [DllImport("user32.dll")] private static extern bool GetCursorPos(out System.Drawing.Point lpPoint);
         [DllImport("user32.dll")] private static extern bool SetSystemCursor(IntPtr hcur, int uid);
-        [DllImport("user32.dll")] private static extern bool DestroyCursor(IntPtr hCursor);
-        [DllImport("user32.dll")] private static extern IntPtr LoadCursor(IntPtr hInstance, int lpCursorName);
         [DllImport("user32.dll")] private static extern IntPtr LoadCursorFromFile(string lpFileName);
         [DllImport("user32.dll")] private static extern IntPtr CopyIcon(IntPtr pcur);
 

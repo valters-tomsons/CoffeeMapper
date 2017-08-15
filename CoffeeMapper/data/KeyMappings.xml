@@ -26,5 +26,10 @@
   <Bind actualKey="CTRL" target="button" value="3"/>
   <Bind actualKey="C" target="button" value="4"/>
   <Bind actualKey="F" target="button" value="5"/>
+
+  <Bind actualKey="F11" target="CoffeeAction" value="0"/>
+  <Bind actualKey="F12" target="CoffeeAction" value="1"/>
+  <Bind actualKey="F10" target="CoffeeAction" value="2"/>
+  <Bind actualKey="F9" target="CoffeeAction" value="3"/>
   
 </KeyMappings>
