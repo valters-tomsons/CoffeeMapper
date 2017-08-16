@@ -60,6 +60,5 @@ namespace CoffeeMapper
             }
             return _values.ToArray();
         }
-
     }
 }

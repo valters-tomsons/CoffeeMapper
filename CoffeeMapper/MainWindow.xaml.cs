@@ -12,7 +12,6 @@ using static CoffeeMapper.XMLParser;
 
 namespace CoffeeMapper
 {
-
     public partial class MainWindow : Window
     {
         static public vJoy joystick = new vJoy();
@@ -20,29 +19,28 @@ namespace CoffeeMapper
         static public uint id = 1;
         static public bool allowFeeding = false;
 
-        private GlobalKeyboardHook KeyboardHook;
-        DispatcherTimer mouseTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(16) };
-
-        ObservableCollection<int> Buttons = new ObservableCollection<int>();
-
-        System.Windows.Forms.NotifyIcon trayicon;
-
-        CoffeeOverlay overlay;
-
         private static int[] KeyCodes;
         private static string[] KeyNames;
 
         int[] oldPos = { 0, 0 };
 
-        int CenterAxis = 16384;
+        readonly int CenterAxis = 16384;
         bool HandleKeys = false;
         bool TrapCursor = true;
-        public int MouseSens = 600;
+
+        public int MouseSens = 850;
+        static int mouseResetInterval = 4;
+
+        private GlobalKeyboardHook KeyboardHook;
+        DispatcherTimer mouseTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(mouseResetInterval) };
+        ObservableCollection<int> Buttons = new ObservableCollection<int>();
+        System.Windows.Forms.NotifyIcon trayicon;
+        CoffeeOverlay overlay;
 
         public MainWindow()
         {
             InitializeComponent();
-            InitializeTrayIcon();
+            //InitializeTrayIcon();
 
             //vJoy Driver Test
             vJoySelfTest();
@@ -96,7 +94,12 @@ namespace CoffeeMapper
                 return;
             }
 
-            StartButton.IsEnabled = true;
+            InitializeKeyboardHook();
+            InitializeMouseHook();
+
+            overlay = new CoffeeOverlay();
+            overlay.Show();
+            ResetAllAxis();
         }
 
         private void CreateKeyArrays()
@@ -130,16 +133,6 @@ namespace CoffeeMapper
             Debug.WriteLine($"Added {KeyCodes.Length} virtual keys!");
         }
 
-        private void StartButton_Click(object sender, RoutedEventArgs e)
-        {
-            InitializeKeyboardHook();
-            InitializeMouseHook();
-
-            overlay = new CoffeeOverlay();
-            overlay.Show();
-            ResetAllAxis();
-        }
-
         private void InitializeKeyboardHook()
         {
             KeyboardHook = new GlobalKeyboardHook();
@@ -153,30 +146,29 @@ namespace CoffeeMapper
 
         private void mouseTimer_Tick(object sender, EventArgs e)
         {
-
             if(MouseCursor.Y > oldPos[1])
             {
                 int sum = (MouseCursor.Y - oldPos[1]) * MouseSens;
-                //Debug.WriteLine(sum);
+                Debug.WriteLine(sum);
                 joystick.SetAxis((16384 + sum), id, HID_USAGES.HID_USAGE_RY);
             }
             else if (MouseCursor.Y < oldPos[1])
             {
                 int sum = (oldPos[1] - MouseCursor.Y) * MouseSens;
-                //Debug.WriteLine(sum);
+                Debug.WriteLine(sum);
                 joystick.SetAxis((16384 - sum), id, HID_USAGES.HID_USAGE_RY);
             }
 
             if (MouseCursor.X > oldPos[0])
             {
                 int sum = (MouseCursor.X - oldPos[0]) * MouseSens;
-                //Debug.WriteLine(sum);
+                Debug.WriteLine(sum);
                 joystick.SetAxis((16384 + sum), id, HID_USAGES.HID_USAGE_RX);
             }
             else if (MouseCursor.X < oldPos[0])
             {
                 int sum = (oldPos[0] - MouseCursor.X) * MouseSens;
-                //Debug.WriteLine(sum);
+                Debug.WriteLine(sum);
                 joystick.SetAxis((16384 - sum), id, HID_USAGES.HID_USAGE_RX);
             }
             
@@ -188,7 +180,6 @@ namespace CoffeeMapper
             oldPos[0] = MouseCursor.X;
             oldPos[1] = MouseCursor.Y;
         }
-
 
         //Gets called when actual key is pressed on keyboard
         [STAThread]
