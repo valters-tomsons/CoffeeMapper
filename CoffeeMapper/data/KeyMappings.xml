@@ -11,25 +11,26 @@
 */
 -->
 <KeyMappings>
-	<Bind actualKey="W" target="HID_USAGES.HID_USAGE_Y" value="1"/>
-  <Bind actualKey="S" target="HID_USAGES.HID_USAGE_Y" value="32768" />
-	<Bind actualKey="A" target="HID_USAGES.HID_USAGE_X" value="1" />
-  <Bind actualKey="D" target="HID_USAGES.HID_USAGE_X" value="32768" />
-
-  <Bind actualKey="UP_ARROW" target="button" value="25" />
-  <Bind actualKey="DOWN_ARROW" target="button" value="24" />
-  <Bind actualKey="LEFT_ARROW" target="button" value="23" />
-  <Bind actualKey="RIGHT_ARROW" target="button" value="22" />
-
-  <Bind actualKey="ENTER" target="button" value="1"/>
-  <Bind actualKey="E" target="button" value="2"/>
-  <Bind actualKey="CTRL" target="button" value="3"/>
-  <Bind actualKey="C" target="button" value="4"/>
-  <Bind actualKey="F" target="button" value="5"/>
-
+  <!-- CoffeeActions are actions handled exclusively by CoffeeMapper. Like debug settings and on/off. Values are set inside CoffeeMapper.MainWindow.xaml.cs.HandleKey(); -->
   <Bind actualKey="F11" target="CoffeeAction" value="0"/>
   <Bind actualKey="F12" target="CoffeeAction" value="1"/>
   <Bind actualKey="F10" target="CoffeeAction" value="2"/>
   <Bind actualKey="F9" target="CoffeeAction" value="3"/>
+  <Bind actualKey="F8" target="CoffeeAction" value="4"/>
   
+	<Bind actualKey="W" target="HID_USAGES.HID_USAGE_Y" value="1"/>
+	<Bind actualKey="S" target="HID_USAGES.HID_USAGE_Y" value="32768" />
+	<Bind actualKey="A" target="HID_USAGES.HID_USAGE_X" value="1" />
+	<Bind actualKey="D" target="HID_USAGES.HID_USAGE_X" value="32768" />
+
+	<Bind actualKey="UP_ARROW" target="button" value="25" />
+	<Bind actualKey="DOWN_ARROW" target="button" value="24" />
+	<Bind actualKey="LEFT_ARROW" target="button" value="23" />
+	<Bind actualKey="RIGHT_ARROW" target="button" value="22" />
+
+	<Bind actualKey="ENTER" target="button" value="1"/>
+	<Bind actualKey="E" target="button" value="2"/>
+	<Bind actualKey="CTRL" target="button" value="3"/>
+	<Bind actualKey="C" target="button" value="4"/>
+	<Bind actualKey="F" target="button" value="5"/>
 </KeyMappings>

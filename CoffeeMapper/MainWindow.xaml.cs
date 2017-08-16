@@ -8,6 +8,7 @@ using vJoyInterfaceWrap;
 using System.Linq;
 using System.Xml;
 using System.Windows.Threading;
+using static CoffeeMapper.XMLParser;
 
 namespace CoffeeMapper
 {
@@ -186,12 +187,11 @@ namespace CoffeeMapper
 
             oldPos[0] = MouseCursor.X;
             oldPos[1] = MouseCursor.Y;
-
-
         }
 
-        //[STAThread]
+
         //Gets called when actual key is pressed on keyboard
+        [STAThread]
         private void On_KeyPressed(object sender, GlobalKeyboardHookEventArgs e)
         {
             if(e.KeyboardState == GlobalKeyboardHook.KeyboardState.KeyDown)
@@ -325,59 +325,12 @@ namespace CoffeeMapper
                     MouseCursor.Show = !MouseCursor.Show;
                     Dispatcher.Invoke(new Action(() => overlay.PushNotification($"Show = {MouseCursor.Show}")));
                 }
-            }
-        }
-
-        //returns all bind types (eg. button/axis/etc.)
-        private string[] Binds(string key)
-        {
-            string BindsXML = AppDomain.CurrentDomain.BaseDirectory + @"\data\KeyMappings.xml";
-            List<string> _binds = new List<string>();
-            using (XmlReader reader = XmlReader.Create(BindsXML))
-            {
-                while(reader.Read())
+                if(value == 4)
                 {
-                    switch(reader.Name)
-                    {
-                        case "KeyMappings":
-                            break;
-                        case "Bind":
-                            string value = reader["actualKey"];
-                            if (value == key)
-                            {
-                                _binds.Add(reader["target"]);
-                            }
-                            break;
-                    }
+                    HandleKeys = !HandleKeys;
+                    Dispatcher.Invoke(new Action(() => overlay.PushNotification($"HandleKeys = {HandleKeys}")));
                 }
             }
-            return _binds.ToArray();
-        }
-
-        //returns actual value for bind type (eg. button 13, x axis 31233)
-        private string[] Values(string key)
-        {
-            string BindsXML = AppDomain.CurrentDomain.BaseDirectory + @"\data\KeyMappings.xml";
-            List<string> _values = new List<string>();
-            using (XmlReader reader = XmlReader.Create(BindsXML))
-            {
-                while(reader.Read())
-                {
-                    switch(reader.Name)
-                    {
-                        case "KeyMappings":
-                            break;
-                        case "Bind":
-                            string value = reader["actualKey"];
-                            if (value == key)
-                            {
-                                _values.Add(reader["value"]);
-                            }
-                            break;
-                    }
-                }
-            }
-            return _values.ToArray();
         }
 
         //Set all axis to center
