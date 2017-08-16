@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace CoffeeMapper
+namespace CoffeeMapper.Domain
 {
-    public static class XMLParser
+    public class XMLParser
     {
         //returns all bind types (eg. button/axis/etc.)
         public static string[] Binds(string key)

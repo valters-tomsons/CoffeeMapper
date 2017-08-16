@@ -10,8 +10,17 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
-        Title="CoffeeMapper" Height="720" Width="1280" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="CoffeeMapper_EXE.ico" Closing="Window_Closing" StateChanged="Window_StateChanged">
+        Title="CoffeeMapper" Height="720" Width="1200" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="CoffeeMapper_EXE.ico" Closing="Window_Closing" StateChanged="Window_StateChanged">
     <Grid>
-        <TextBlock x:Name="DriverLabel" FontFamily="Roboto Light" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="80"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Grid.Column="0" Fill="#cd006a" />
+        <Image Margin="5" Grid.Column="0" Source="Resources/icon_text.png" VerticalAlignment="Top"/>
+        <TextBlock x:Name="versionText" Text="Version: 211" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0"/>
+
+        <TextBlock Grid.ColumnSpan="120" x:Name="DriverLabel" FontFamily="Roboto Light" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="80"/>
     </Grid>
 </Window>

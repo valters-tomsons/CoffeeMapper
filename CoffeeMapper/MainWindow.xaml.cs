@@ -8,7 +8,7 @@ using vJoyInterfaceWrap;
 using System.Linq;
 using System.Xml;
 using System.Windows.Threading;
-using static CoffeeMapper.XMLParser;
+using CoffeeMapper.Domain;
 
 namespace CoffeeMapper
 {
@@ -40,7 +40,8 @@ namespace CoffeeMapper
         public MainWindow()
         {
             InitializeComponent();
-            //InitializeTrayIcon();
+
+            versionText.Text = $"Version: {VersionControl.CurrentVersion}";
 
             //vJoy Driver Test
             vJoySelfTest();
@@ -53,6 +54,7 @@ namespace CoffeeMapper
             CreateKeyArrays();
         }
 
+        //unused because unstable
         private void InitializeTrayIcon()
         {
             trayicon = new System.Windows.Forms.NotifyIcon();
@@ -90,7 +92,7 @@ namespace CoffeeMapper
             Debug.WriteLine($"Device Status: {JoyTest.DriverStatus(joystick, id)}");
             if(JoyTest.DriverStatus(joystick, id) != "free")
             {
-                DriverLabel.Text = "vJoy Device not usable, please restart Computer";
+                DriverLabel.Text = "vJoy Device unavailable";
                 return;
             }
 
@@ -222,8 +224,8 @@ namespace CoffeeMapper
                     {
                         int loc = Array.IndexOf(KeyCodes, key);
                         string keyname = KeyNames[loc];
-                        string[] _binds = Binds(keyname);
-                        string[] _values = Values(keyname);
+                        string[] _binds = XMLParser.Binds(keyname);
+                        string[] _values = XMLParser.Values(keyname);
 
                         if (_binds.Length >= 0)
                         {
@@ -248,8 +250,8 @@ namespace CoffeeMapper
                     {
                         int loc = Array.IndexOf(KeyCodes, key);
                         string keyname = KeyNames[loc];
-                        string[] _binds = Binds(keyname);
-                        string[] _values = Values(keyname);
+                        string[] _binds = XMLParser.Binds(keyname);
+                        string[] _values = XMLParser.Values(keyname);
 
                         if (_binds.Length >= 0)
                         {
