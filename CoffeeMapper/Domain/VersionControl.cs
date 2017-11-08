@@ -1,14 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoffeeMapper.Domain
 {
     public class VersionControl
     {
-        public static Version CurrentVersion = Assembly.GetExecutingAssembly().GetName().Version;
+        public static Version CurrentVersion
+        {
+            get
+            {
+                var ver = Assembly.GetExecutingAssembly().GetName().Version;
+                Debug.WriteLine(ver);
+                return ver;
+            }
+        }
     }
 }

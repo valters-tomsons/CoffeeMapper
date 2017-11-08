@@ -78,15 +78,16 @@ namespace CoffeeMapper
         {
             if(!JoyTest.isDriverInstalled(joystick))
             {
-                DriverLabel.Text = "vJoy Driver not installed!";
+                MessageBox.Show("Please download and install the vJoy driver!", "vJoy Driver not found!", MessageBoxButton.OK, MessageBoxImage.Error);
                 Process.Start("http://vjoystick.sourceforge.net/site/index.php/download-a-install/download");
-                //Application.Current.Shutdown();
+                Application.Current.Shutdown();
                 return;
             }
 
             if(!JoyTest.isVersionCompatible(joystick))
             {
-                DriverLabel.Text = "SDK Version is outdated, unstable!";
+                //DriverLabel.Text = "SDK Version is outdated, unstable!";
+                MessageBox.Show("vJoy driver is installed, but it's not the right version. It SHOULD work...", "Driver version mismatch!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
             Debug.WriteLine($"Device Status: {JoyTest.DriverStatus(joystick, id)}");

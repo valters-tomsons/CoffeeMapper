@@ -1,6 +1,7 @@
 ﻿using System;
 using vJoyInterfaceWrap;
 
+
 namespace CoffeeMapper
 {
     static class JoyTest
@@ -17,6 +18,13 @@ namespace CoffeeMapper
             {
                 return false;
             }
+        }
+
+        public static int GetButtons(vJoy joystick, uint id)
+        {
+            var foo = JoyTest.ReturnAxes(joystick, id);
+            
+            return 0;
         }
 
         public static bool isVersionCompatible(vJoy joystick)

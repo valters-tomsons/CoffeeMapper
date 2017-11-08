@@ -14,12 +14,14 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="3.6*"/>
         </Grid.ColumnDefinitions>
 
         <Rectangle Grid.Column="0" Fill="#cd006a" />
         <Image Margin="5" Grid.Column="0" Source="Resources/icon_text.png" VerticalAlignment="Top"/>
-        <TextBlock x:Name="versionText" Text="Version: 211" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0"/>
+        <TextBlock x:Name="versionText" Text="Version: 1.0.233213.33211" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0"/>
+
+        <Frame Grid.Column="1" x:Name="mainFrame"/>
 
         <TextBlock Grid.ColumnSpan="120" x:Name="DriverLabel" FontFamily="Roboto Light" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="80"/>
     </Grid>
